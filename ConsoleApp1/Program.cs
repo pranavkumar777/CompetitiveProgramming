@@ -23,10 +23,17 @@ namespace ConsoleApp1
             {
                 for (int j = 0; j < n; j++)
                 {
-                    Console.WriteLine("substring");
                     input[i,j] = Convert.ToInt32(Console.ReadLine());
                 }
-                //Console.WriteLine("Hello, World!"+i);
+            }
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(input[i, j]+" ");
+                }
+                Console.WriteLine();
             }
             Console.ReadLine();
         }
