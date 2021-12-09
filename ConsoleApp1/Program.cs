@@ -112,7 +112,7 @@ namespace ConsoleApp1
 
             catch(Exception e)
             {
-
+                Console.WriteLine("Exception occured" + e);
             }
           
         }
