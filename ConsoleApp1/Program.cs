@@ -1,125 +1,129 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace GameOfLife
 {
-    class Program
+    public class GameOfLifeSolution
     {
+        //Neighbour positions
+        int[] x = { 0, 1, 1, 1, 0, -1, -1, -1 };
+        int[] y = { -1, -1, 0, 1, 1, 1, 0, -1 };
+
         // Check whether neighbour coordinates are valid
-        public bool isValid(int x,int y)
+        private bool isValidNeighbour(int x, int y)
         {
-            if(x>24 || x<0 || y <0 || y>24)
+            if (x > 24 || x < 0 || y < 0 || y > 24)
                 return false;
 
             return true;
         }
 
-        public void OutputLive(int[,] input, int gen)
+        private int[,] ComputeNextGeneration(int[,] nextGen, int[,] currGen)
         {
+            for (int i = 0; i < 25; i++)
+            {
+                for (int j = 0; j < 25; j++)
+                {
+                    int liveneighbour = 0;
+                    for (int k = 0; k < 8; k++)
+                    {
+                        //Check whether neighbour position is valid
+                        bool valid = isValidNeighbour(i + x[k], j + y[k]);
+                        if (valid && (currGen[i + x[k], j + y[k]] == 1))
+                        {
+                            liveneighbour++;
+                        }
+
+                    }
+                    if (currGen[i, j] == 1 && (liveneighbour < 2 || liveneighbour > 3))
+                    {
+                        nextGen[i, j] = 0;
+                    }
+                    if (currGen[i, j] == 0 && (liveneighbour == 3))
+                    {
+                        nextGen[i, j] = 1;
+                    }
+                }
+            }
+            return nextGen;
+        }
+
+        private void DisplayCurrentGeneration(int[,] currGen)
+        {
+
+            for (int i = 0; i < 25; i++)
+            {
+                for (int j = 0; j < 25; j++)
+                {
+                    Console.Write(currGen[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+
+        public List<int> ComputeLivingPositions(int[,] currGen, int generations)
+        {
+            List<int> livePositions = new List<int>();
             try
             {
-                //Neighbour positions
-                int[] x = { 0, 1, 1, 1, 0, -1, -1, -1 };
-                int[] y = { -1, -1, 0, 1, 1, 1, 0, -1 };
-
-                int[,] output = new int[25,25];
                
-                //copying input to output
+                int[,] nextGen = new int[25, 25];
+                //copying currGen to nextGen
                 for (int i = 0; i < 25; i++)
                 {
                     for (int j = 0; j < 25; j++)
                     {
-                       
-                        output[i, j] = input[i, j];
+
+                        nextGen[i, j] = currGen[i, j];
                     }
                 }
 
                 Console.WriteLine();
 
                 int iterations = 1;
-                while (iterations <= gen)
+                while (iterations <= generations)
                 {
+                  nextGen =  ComputeNextGeneration(nextGen, currGen);
+
+                    //Updating current generation to compute next generation 
                     for (int i = 0; i < 25; i++)
                     {
                         for (int j = 0; j < 25; j++)
                         {
-                            int liveneighbour = 0;
-                            for (int k = 0; k < 8; k++)
-                            {
-                                //Check whether neighbour position is valid
-                                bool valid = isValid(i + x[k], j + y[k]);
-                                if (valid && (input[i + x[k], j + y[k]] == 1))
-                                {
-                                    liveneighbour++;
-                                }
-
-                            }
-                            if (input[i, j] == 1 && (liveneighbour < 2 || liveneighbour > 3))
-                            {
-                                output[i, j] = 0;
-                            }
-                            if (input[i, j] == 0 && (liveneighbour == 3))
-                            {
-                                output[i, j] = 1;
-                            }
-                        }
-                    }
-
-
-                    // Uncomment to print next generation
-                    //for (int i = 0; i < 25; i++)
-                    //{
-                    //    for (int j = 0; j < 25; j++)
-                    //    {
-                    //        //if (output[i, j] == 1)
-                    //        //{
-                    //        //    Console.WriteLine("(" + i + "," + j + ")");
-                    //        //}
-                    //        Console.Write(output[i, j] + " ");
-                    //    }
-                    //    Console.WriteLine();
-                    //}
-
-                    Console.WriteLine();
-
-                    //set Input for next generation 
-                    for (int i = 0; i < 25; i++)
-                    {
-                        for (int j = 0; j < 25; j++)
-                        {                            
-                            input[i, j] = output[i, j];
+                            currGen[i, j] = nextGen[i, j];
                         }
                     }
                     iterations++;
                 }
 
+
                 //print required generation
-                Console.WriteLine("The live cells in the " + gen + " generation are below:");
+                Console.WriteLine("The live cells in the " + generations + " generation are below:");
                 for (int i = 0; i < 25; i++)
                 {
                     for (int j = 0; j < 25; j++)
                     {
-                        if (output[i, j] == 1)
+                        if (nextGen[i, j] == 1)
                         {
+                            string x = i.ToString();
+                            string y = j.ToString();
+                            livePositions.Add(int.Parse(x+y));
                             Console.WriteLine("(" + i + "," + j + ")");
                         }
                     }
                 }
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Exception occured" + e);
             }
-          
+            return livePositions;
         }
 
-        static void Main(string[] args)
+       public static void Main(string[] args)
         {
-
 
             int[,] input = new int[25, 25];
 
@@ -145,8 +149,8 @@ namespace ConsoleApp1
             //input[3, 2] = 1;
 
 
-            Program program = new Program();
-            program.OutputLive(input,gen);
+            GameOfLifeSolution program = new GameOfLifeSolution();
+            program.ComputeLivingPositions(input, gen);
             Console.ReadLine();
         }
     }
