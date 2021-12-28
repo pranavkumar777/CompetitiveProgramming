@@ -126,6 +126,7 @@ namespace GameOfLife
         {
 
             int[,] input = new int[25, 25];
+            // TO DO : Set Dynamic input from user
 
             //Input set 1
             int gen = 3;
