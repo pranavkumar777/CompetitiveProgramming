@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1738
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{C7226F27-2F82-4FDD-A6F9-D195E8F5748B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Competitive Programming", "ConsoleApp1\Competitive Programming.csproj", "{C7226F27-2F82-4FDD-A6F9-D195E8F5748B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{D31568FF-A1D2-4868-9B45-2A0E6936992F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C7226F27-2F82-4FDD-A6F9-D195E8F5748B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7226F27-2F82-4FDD-A6F9-D195E8F5748B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7226F27-2F82-4FDD-A6F9-D195E8F5748B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31568FF-A1D2-4868-9B45-2A0E6936992F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31568FF-A1D2-4868-9B45-2A0E6936992F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31568FF-A1D2-4868-9B45-2A0E6936992F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31568FF-A1D2-4868-9B45-2A0E6936992F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
