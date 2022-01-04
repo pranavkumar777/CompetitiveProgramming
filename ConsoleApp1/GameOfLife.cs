@@ -1,14 +1,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace GameOfLife
+namespace CompetitiveProgramming
 {
     public class GameOfLifeSolution
     {
+        //Variables Declaration
+        private int[,] nextGen = new int[25, 25];
+        private List<int> livePositions = new List<int>();
+        private int[,] currGen = new int[25, 25];
+        private int generations { get; set; }
+
         //Neighbour positions
         int[] x = { 0, 1, 1, 1, 0, -1, -1, -1 };
         int[] y = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
+     
         // Check whether neighbour coordinates are valid
         private bool isValidNeighbour(int x, int y)
         {
@@ -48,6 +55,7 @@ namespace GameOfLife
             return nextGen;
         }
 
+        //Display living and dead positions of current generations
         private void DisplayCurrentGeneration(int[,] currGen)
         {
 
@@ -62,13 +70,30 @@ namespace GameOfLife
 
         }
 
-        public List<int> ComputeLivingPositions(int[,] currGen, int generations)
+        public void DisplayLivingPositions()
         {
-            List<int> livePositions = new List<int>();
-            try
+            //print required generation
+            Console.WriteLine("The live cells in the " + generations + " generation are below:");
+            for (int i = 0; i < 25; i++)
             {
-               
-                int[,] nextGen = new int[25, 25];
+                for (int j = 0; j < 25; j++)
+                {
+                    if (nextGen[i, j] == 1)
+                    {
+                        string x = i.ToString();
+                        string y = j.ToString();
+                        livePositions.Add(int.Parse(x + y));
+                        Console.WriteLine("(" + i + "," + j + ")");
+                    }
+                }
+            }
+        }
+
+        //Compute Living positions upto required generation
+        public List<int> ComputeLivingPositions()
+        {          
+            try
+            {                               
                 //copying currGen to nextGen
                 for (int i = 0; i < 25; i++)
                 {
@@ -96,23 +121,7 @@ namespace GameOfLife
                     }
                     iterations++;
                 }
-
-
-                //print required generation
-                Console.WriteLine("The live cells in the " + generations + " generation are below:");
-                for (int i = 0; i < 25; i++)
-                {
-                    for (int j = 0; j < 25; j++)
-                    {
-                        if (nextGen[i, j] == 1)
-                        {
-                            string x = i.ToString();
-                            string y = j.ToString();
-                            livePositions.Add(int.Parse(x+y));
-                            Console.WriteLine("(" + i + "," + j + ")");
-                        }
-                    }
-                }
+                
             }
 
             catch (Exception e)
@@ -122,37 +131,31 @@ namespace GameOfLife
             return livePositions;
         }
 
-       public static void Main(string[] args)
+        public void SetInput()
         {
-
-            int[,] input = new int[25, 25];
             // TO DO : Set Dynamic input from user
 
             //Input set 1
-            int gen = 3;
-            input[2, 1] = 1;
-            input[2, 2] = 1;
-            input[2, 3] = 1;
+            generations = 3;
+            currGen[2, 1] = 1;
+            currGen[2, 2] = 1;
+            currGen[2, 3] = 1;
 
             //Input set 2
-            //int gen = 5;
-            //input[9, 8] = 1;
-            //input[10, 9] = 1;
-            //input[8, 10] = 1;
-            //input[9, 10] = 1;
-            //input[10, 10] = 1;
+            //generations = 5;
+            //currGen[9, 8] = 1;
+            //currGen[10, 9] = 1;
+            //currGen[8, 10] = 1;
+            //currGen[9, 10] = 1;
+            //currGen[10, 10] = 1;
 
             //Input set 3
-            //int gen = 10;
-            //input[1, 2] = 1;
-            //input[2, 1] = 1;
-            //input[2, 3] = 1;
-            //input[3, 2] = 1;
-
-
-            GameOfLifeSolution program = new GameOfLifeSolution();
-            program.ComputeLivingPositions(input, gen);
-            Console.ReadLine();
+            //generations = 10;
+            //currGen[1, 2] = 1;
+            //currGen[2, 1] = 1;
+            //currGen[2, 3] = 1;
+            //currGen[3, 2] = 1;
         }
+
     }
 }
